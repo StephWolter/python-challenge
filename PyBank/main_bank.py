@@ -4,26 +4,22 @@ import csv
 budget_data = os.path.join("Resources", "budget_data.csv")
 # Open and read csv
 with open(budget_data) as csvfile:
-    csv_reader = csv.reader(csvfile, delimiter=",")
-    
-    csv_header = next(csv_reader)
-    #print out the csv file
-    #print(f"CSV Header: {csv_header}")
+    monthly_statements = csv.reader(budget_data, delimiter=",")
+    #identify and move past the header row
+    csv_header = next(monthly_statements)
+    date_info = [i.split(',')[0] for i in csvfile.readlines()]
+    balance_info =  [i.split(',')[1] for i in csvfile.readlines()]
 
-    # Read each row of data after the header
-    for row in csv_reader:
-        print(row)
+date_total = len(date_info)
+print(date_total)
 
-#define list and variables within
-    def monthly_statements(budget_data):
-        month = csv_reader[0]
-        prof_loss = csv_reader[1]
 
-#calculate total months
-    total_months = len[month]
-    print(total_months)
-    
+   
 #display output
-#print("Financial Analysis")
-#print("--------------------")
-#print(f"The number of months is ", total_months)
+print("Financial Analysis")
+print("--------------------")
+print(f"The number of months is: {date_total}")
+#print(f"The total profit/loss: {total_prof_loss} ")
+#print(f"The average change is: {average_change} ")
+#print(f"The greatest increase over time is: {greatest_increase}")
+#print(f"The greatest decrease over time is: {greatest_decrease}")
