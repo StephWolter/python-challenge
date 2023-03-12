@@ -1,25 +1,69 @@
 import os
 import csv
-#point to correct resource csv file
-budget_data = os.path.join("Resources", "budget_data.csv")
-# Open and read csv
-with open(budget_data) as csvfile:
-    monthly_statements = csv.reader(budget_data, delimiter=",")
-    #identify and move past the header row
-    csv_header = next(monthly_statements)
-    date_info = [i.split(',')[0] for i in csvfile.readlines()]
-    balance_info =  [i.split(',')[1] for i in csvfile.readlines()]
-
-date_total = len(date_info)
-print(date_total)
 
 
-   
+# Path to collect data from the Resources folder
+budget_csv = os.path.join('Resources', 'budget_data.csv')
+
+#define lists
+budget_data = []
+
+# Read in the CSV file
+with open(budget_csv) as csvfile:
+    # Split the data on commas
+    budget_data = csv.reader(csvfile, delimiter=',')
+
+    # Label the header row first 
+    budget_header = next(budget_data)
+
+    #Spot check
+    #for row in budget_data:
+        #print(row)
+
+    #initialize counters
+    last_month = 0    
+    total = 0
+    total_months = 0
+    change = []
+
+    #splitting columns into new lists
+    for row_data in budget_data:
+        date_info, balance_info = row_data[0], row_data[1]
+        #spot check lists made of columns 
+        #print(date_info)
+    #The net total amount of "Profit/Losses" over the entire period
+        total += int(balance_info) 
+        #add to the counter for total months
+        total_months += 1
+    #The changes in "Profit/Losses" over the entire period, and then the average of those changes
+        if last_month != 0:
+            change.append(int(balance_info) - int(last_month))
+        #set last_month to current month
+        last_month = balance_info
+        #spotcheck the change
+        #print(change)
+    
+    #find average
+    average_change = sum(change) / int(total_months)
+
+    greatest_increase = max(change)
+    greatest_decrease = min(change)
+
+    #Spot check balance total
+    #print (total)
+
+    #Spot Check The total number of months included in the dataset
+    #print(total_months)
+
+#The greatest increase in profits (date and amount) over the entire period
+
+#The greatest decrease in profits (date and amount) over the entire period
+
 #display output
 print("Financial Analysis")
 print("--------------------")
-print(f"The number of months is: {date_total}")
-#print(f"The total profit/loss: {total_prof_loss} ")
-#print(f"The average change is: {average_change} ")
-#print(f"The greatest increase over time is: {greatest_increase}")
-#print(f"The greatest decrease over time is: {greatest_decrease}")
+print(f"The total months is: {total_months}")
+print(f"The total profit/loss: {total} ")
+print(f"The average change is: {average_change} ")
+print(f"The greatest increase over time is: {greatest_increase}")
+print(f"The greatest decrease over time is: {greatest_decrease}")
