@@ -15,7 +15,7 @@ with open(budget_csv) as csvfile:
 
     # Label the header row first 
     budget_header = next(budget_data)
-    
+
     #initialize counters
     last_month = 0    
     total = 0
@@ -27,7 +27,7 @@ with open(budget_csv) as csvfile:
         date_info, balance_info = row_data[0], row_data[1]
         #spot check lists made of columns 
         #print(date_info)
-    #The net total amount of "Profit/Losses" over the entire period
+    #calculate total number of balances
         total += int(balance_info) 
         #add to the counter for total months
         total_months += 1
@@ -36,8 +36,6 @@ with open(budget_csv) as csvfile:
             change.append(int(balance_info) - int(last_month))
         #set last_month to current month
         last_month = balance_info
-        #spotcheck the change
-        #print(change)
     
     #find average
     average_change = sum(change) / int(total_months)
@@ -63,3 +61,14 @@ print(f"The total profit/loss: {total} ")
 print(f"The average change is: {average_change} ")
 print(f"The greatest increase over time is: {greatest_increase}")
 print(f"The greatest decrease over time is: {greatest_decrease}")
+
+with open("Analysis/Monthly_Budget_Results.txt", "w") as f:
+    l1 = "Financial Analysis"
+    l2 = "------------------"
+    l3 = (f"The total months is: {total_months}")
+    l4 = (f"The total profit/loss: {total} ")
+    l5 = (f"The average change is: {average_change} ")
+    l6 = (f"The greatest increase over time is: {greatest_increase}")
+    l7 = (f"The greatest decrease over time is: {greatest_decrease}")
+    f.writelines([l1,l2,l3,l4,l5,l6,l7])
+

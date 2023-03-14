@@ -1,0 +1,1 @@
+Financial Analysis------------------The total months is: 86The total profit/loss: 22564198 The average change is: -8214.46511627907 The greatest increase over time is: 1862002The greatest decrease over time is: -1825558
