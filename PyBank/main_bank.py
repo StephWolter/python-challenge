@@ -15,11 +15,7 @@ with open(budget_csv) as csvfile:
 
     # Label the header row first 
     budget_header = next(budget_data)
-
-    #Spot check
-    #for row in budget_data:
-        #print(row)
-
+    
     #initialize counters
     last_month = 0    
     total = 0

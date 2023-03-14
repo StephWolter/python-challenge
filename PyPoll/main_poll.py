@@ -4,12 +4,13 @@ import csv
 election_csv = os.path.join("Resources", "election_data.csv")
 election_data = []
 candidate_list = {}
-vote_candidates = ()
+vote_candidates = []
+dict_votes = {}
 
 # Open and read csv
 with open(election_csv) as csvfile:
     election_data = csv.reader(csvfile, delimiter=",")
-
+    
     # Label the header row first 
     election_header = next(election_data)
 
@@ -19,7 +20,8 @@ with open(election_csv) as csvfile:
     total_votes = 0
     candidate_list = []
     votes = {}
-
+    #test_total = len(election_csv)
+    #print(test_total)
     for row_data in election_data:
         ballot_id, county, candidate_voted = row_data[0], row_data[1], row_data[2]
         #spot check those lists worked
@@ -30,9 +32,9 @@ with open(election_csv) as csvfile:
         # A complete list of candidates who received votes and the running total
         if candidate_voted not in candidate_list:
             candidate_list.append(candidate_voted)
-            votes[candidate_voted] = 0
+            votes[candidate_voted] = 1
         votes[candidate_voted] += 1
-        #print(candidate_list)
+        #print(candidate_voted)
     
     
     #The total number of votes each candidate won
@@ -40,9 +42,14 @@ with open(election_csv) as csvfile:
     DD_votes = int(votes[candidate_list[1]])
     RAD_votes = int(votes[candidate_list[2]])
 
-    vote_candidates = (CCS_votes, DD_votes, RAD_votes)
-    winner_votes = max(vote_candidates)
-
+    vote_candidates = [CCS_votes, DD_votes, RAD_votes]
+    #print(vote_candidates)
+    
+    #find winner based on max votes
+    winner_votes = vote_candidates.index(max(vote_candidates))
+    #print(winner_votes)
+    winner = candidate_list[winner_votes]
+ 
     #The percentage of votes each candidate won 
     CCS_percent = ((int(CCS_votes)/int(total_votes))*100)
     DD_percent = (int(DD_votes)/int(total_votes))*100 
@@ -52,15 +59,15 @@ with open(election_csv) as csvfile:
     percent_candidates = list(map("{:.3f}%".format, percents))
     #spot check percents
     #print(percent_candidates)
-#create summary with everything together
-numbers_display = zip(candidate_list, percent_candidates, vote_candidates)
-vote_summary = list(numbers_display)
+
+
        
 print("Election Results")
 print("-------------------------")
 print(f"Total Votes: {total_votes}")
 print("-------------------------")
-print(*vote_summary,sep='\n')
+for count in range(len(candidate_list)):
+    print(f"{candidate_list[count]}: {percent_candidates[count]} ({vote_candidates[count]})")
 print("-------------------------")
-#print(f"Winner: {winner}") 
+print(f"Winner: {winner}") 
 print("-------------------------")
